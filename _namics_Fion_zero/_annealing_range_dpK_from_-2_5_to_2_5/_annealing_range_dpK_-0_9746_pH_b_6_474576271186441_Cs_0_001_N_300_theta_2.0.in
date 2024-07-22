@@ -1,0 +1,78 @@
+lat : flat : geometry : planar
+lat : flat : gradients : 1
+lat : flat : n_layers : 320
+lat : flat : lattice_type : simple_cubic
+lat : flat : bondlength : 3e-10
+
+mon : X0 : freedom : pinned 
+mon : X0 : pinned_range : firstlayer
+
+mon : A : freedom : free 
+mon : G : freedom : free
+
+mon : W : freedom : free
+mol : water : freedom : solvent
+mol : water : composition : (W)1
+
+mon : P : freedom : free
+mon : P : valence : 1.0
+mon : M : freedom : free
+mon : M : valence : -1.0
+
+mol : Na : composition  : (P)1
+mol : Na : freedom : free
+mol : Na : phibulk : 0.001
+
+mol : Cl : composition : (M)1
+mol : Cl : freedom : free
+mol : Cl : phibulk : 0.001
+
+mol : brush  : composition : (X0)1(A)298(G)1
+mol : brush : freedom : restricted
+mol : brush : theta : 2.0
+
+mon : X0 : chi_W : 0.5
+mon : A : chi_W : 0.5
+mon : G : chi_W : 0.5
+
+mon : X0 : chi_P : 0.5
+mon : A : chi_P : 0.5
+mon : G : chi_P : 0.5
+
+mon : X0 : chi_M : 0.5
+mon : A : chi_M : 0.5
+mon : G : chi_M : 0.5
+
+output : pro : append : true
+output : pro : write_bounds : true
+
+pro : sys : noname : psi
+pro : mol : brush : phi 
+
+newton : isaac : method : pseudohessian
+newton : isaac : iterationlimit : 10000000
+newton : isaac : tolerance : 1e-8
+newton : isaac : deltamax : 0.1
+
+state : H3O : mon : W
+state : H2O : mon : W
+state : OH : mon : W
+state : H3O : valence: 1
+state : H2O : valence: 0
+state : OH : valence: -1
+
+state : AH : valence : 0
+state : AH : mon : A
+state : AM : valence : -1
+state : AM : mon : A
+
+reaction : weak : equation : 1(AH) + 1(H2O) = 1(AM) + 1(H3O)
+reaction : weak : pK : 5.5
+
+reaction : auto : equation : 2(H2O) = 1(OH) + 1(H3O) 
+reaction : auto : pK : 14
+
+state : H3O : alphabulk : 3.352923025039895e-07
+//какой pH такая и степень x в уравнении (1 + 10^(pH_b))^(-1)
+
+start

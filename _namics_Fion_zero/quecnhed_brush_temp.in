@@ -1,0 +1,59 @@
+lat : flat : geometry : planar
+lat : flat : gradients : 1
+lat : flat : n_layers : 400
+lat : flat : lattice_type : simple_cubic
+lat : flat : bondlength : 3e-10
+
+mon : X0 : freedom : pinned 
+mon : X0 : pinned_range : 1;1
+
+mon : W : freedom : free
+mon : A : freedom : free
+mon : G : freedom : free
+
+mon : X0 : chi_W : 0.5
+mon : A : chi_W : 0.5
+mon : G : chi_W : 0.5
+
+mon : X0 : chi_Na : 0.5
+mon : A : chi_Na : 0.5
+mon : G : chi_Na : 0.5
+
+mon : X0 : chi_Cl : 0.5
+mon : A : chi_Cl : 0.5
+mon : G : chi_Cl : 0.5
+
+mon : X0 : valence : -0.7152527510491987
+mon : A : valence : -0.7152527510491987
+mon : G : valence : -0.7152527510491987
+
+mon : Na : valence : 1
+mon : Cl : valence : -1
+
+mon : Na : freedom : free
+mon : Cl : freedom : free
+
+mol : Na : composition  : (Na)1
+mol : Na : freedom : neutralizer
+
+mol : Cl : composition : (Cl)1
+mol : Cl : freedom : free
+mol : Cl : phibulk : 0.001
+
+mol : water : composition : (W)1
+mol : water : freedom : solvent
+
+mol : brush  : composition : (X0)1(A)398(G)1
+mol : brush : freedom : restricted
+mol : brush : theta : 4
+
+output : pro : append : true
+output : pro : write_bounds : true
+
+pro : sys : noname : psi
+pro : mol : brush : phi 
+
+newton : isaac : method : pseudohessian
+newton : isaac : iterationlimit : 10000000
+newton : isaac : tolerance : 1e-8
+newton : isaac : deltamax : 0.1
